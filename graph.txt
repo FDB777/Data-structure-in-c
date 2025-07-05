@@ -1,0 +1,149 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+#define MAX_VERTICES 100
+
+void dfs(int graph[MAX_VERTICES][MAX_VERTICES], int n, int visited[], int v) {
+    int stack[MAX_VERTICES], top = -1;
+    visited[v] = 1;
+    stack[++top] = v;
+    printf("DFS (starting from vertex %d): ", v);
+    while (top != -1) {
+        v = stack[top];
+        top--;
+        printf("%d ", v);
+        for (int i = 0; i < n; i++) {
+            if (graph[v][i] == 1 && visited[i]==0) {
+                visited[i] = 1;
+                stack[++top] = i;
+            }
+        }
+    }
+    printf("\n");
+}
+
+void bfs(int graph[MAX_VERTICES][MAX_VERTICES], int n, int visited[], int v) {
+    int queue[MAX_VERTICES], front = 0, rear = -1;
+
+    visited[v] = 1;
+    queue[++rear] = v;
+
+    printf("BFS (starting from vertex %d): ", v);
+
+    while (front <= rear) {
+        v = queue[front++];
+        printf("%d ", v);
+
+        for (int i = 0; i < n; i++) {
+            if (graph[v][i] == 1 && visited[i]==0) {
+                visited[i] = 1;
+                queue[++rear] = i;
+            }
+        }
+    }
+    printf("\n");
+}
+
+void display_adjacency_matrix(int graph[MAX_VERTICES][MAX_VERTICES], int n) {
+    printf("Adjacency Matrix:\n");
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            printf("%d ", graph[i][j]);
+        }
+        printf("\n");
+    }
+}
+
+void display_adjacency_list(int graph[MAX_VERTICES][MAX_VERTICES], int n) {
+    printf("Adjacency List:\n");
+    for (int i = 0; i < n; i++) {
+        printf("%d: ", i);
+        for (int j = 0; j < n; j++) {
+            if (graph[i][j] == 1) {
+                printf("%d ", j);
+            }
+        }
+        printf("\n");
+    }
+}
+
+int main() {
+    int graph[MAX_VERTICES][MAX_VERTICES] = {0}; // Initialize graph with 0 (no edges)
+    int n, choice, v1, v2;
+    int visited[MAX_VERTICES] = {0};
+
+    printf("Enter the number of vertices: ");
+    scanf("%d", &n);
+
+    while (1) {
+        printf("\nMenu:\n");
+        printf("1. Add Edge\n");
+        printf("2. Perform DFS\n");
+        printf("3. Perform BFS\n");
+        printf("4. Display Adjacency List\n");
+        printf("5. Display Adjacency Matrix\n");
+        printf("6. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+            case 1:
+                // Add Edge (directed graph)
+                printf("Enter the vertices to add an edge (v1 v2): ");
+                scanf("%d %d", &v1, &v2);
+                if (v1 < n && v2 < n) {
+                    graph[v1][v2] = 1; // Only add the directed edge v1 -> v2
+                    printf("Edge added from %d to %d.\n", v1, v2);
+                } else {
+                    printf("Invalid vertices.\n");
+                }
+                break;
+
+            case 2:
+                // Perform DFS using stack
+                printf("Enter the starting vertex for DFS: ");
+                scanf("%d", &v1);
+                if (v1 < n) {
+                    // Reset visited array
+                    for (int i = 0; i < n; i++) visited[i] = 0;
+                    dfs(graph, n, visited, v1); // Call DFS using stack
+                } else {
+                    printf("Invalid vertex.\n");
+                }
+                break;
+
+            case 3:
+                // Perform BFS
+                printf("Enter the starting vertex for BFS: ");
+                scanf("%d", &v1);
+                if (v1 < n) {
+                    // Reset visited array
+                    for (int i = 0; i < n; i++) visited[i] = 0;
+                    bfs(graph, n, visited, v1); // Call BFS
+                } else {
+                    printf("Invalid vertex.\n");
+                }
+                break;
+
+            case 4:
+                // Display Adjacency List
+                display_adjacency_list(graph, n);
+                break;
+
+            case 5:
+                // Display Adjacency Matrix
+                display_adjacency_matrix(graph, n);
+                break;
+
+            case 6:
+                // Exit
+                printf("Exiting...\n");
+                exit(0);
+
+            default:
+                printf("Invalid choice. Please try again.\n");
+        }
+    }
+
+    return 0;
+}

@@ -1,0 +1,62 @@
+#include <stdio.h>
+
+void maxHeapify(int arr[], int n, int s) {
+    int largest = s;
+    int left = 2 * s;
+    int right = 2 * s + 1;
+
+    if (left <= n && arr[left] > arr[largest]) {
+        largest = left;
+    }
+
+    if (right <= n && arr[right] > arr[largest]) {
+        largest = right;
+    }
+
+    if (largest != s) {
+        int temp = arr[s];
+        arr[s] = arr[largest];
+        arr[largest] = temp;
+        maxHeapify(arr, n, largest);
+    }
+}
+
+void heapSort(int arr[], int n) {
+    // Build the max heap directly in the sorting loop
+    for (int i = n / 2; i >= 1; i--) {
+        maxHeapify(arr, n, i);
+    }
+
+    // Perform the heap sort
+    for (int i = n; i > 1; i--) {
+        // Swap the root (maximum element) with the last element
+        int temp = arr[1];
+        arr[1] = arr[i];
+        arr[i] = temp;
+
+        // Call maxHeapify on the reduced heap
+        maxHeapify(arr, i - 1, 1);
+    }
+}
+
+void printArray(int arr[], int n) {
+    for (int i = 1; i <= n; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
+void main() {
+    int n, i, arr[100];
+    printf("Enter the number of elements: ");
+    scanf("%d", &n);
+    printf("Enter %d elements:\n", n);
+    for (i = 1; i <= n; i++) {
+        scanf("%d", &arr[i]);
+    }
+    printf("Original array: ");
+    printArray(arr, n);
+    heapSort(arr, n);
+    printf("Sorted array: ");
+    printArray(arr, n);
+}

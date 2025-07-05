@@ -1,0 +1,257 @@
+
+#include<stdio.h>
+void main(){
+    int i,j,k,row1,row2,col1,col2,c1=0,c2=0,a[10][10],b[10][10],sparse1[10][10],sparse2[10][10],result[10][10];
+    printf("\n Enter the number of rows of matrix 1:\n");
+    scanf("%d",&row1);
+    printf("\n Enter the number of columns of matrix 1:\n");
+    scanf("%d",&col1);
+    printf("Enter the elements:\n");
+    for(i=0;i<row1;i++)
+    {
+        for(j=0;j<col1;j++)
+        {
+            scanf("%d",&a[i][j]);
+        }
+            printf("\n");
+    }
+    printf("Matrix 1 is:\n");
+    for(i=0;i<row1;i++)
+    {
+        for(j=0;j<col1;j++)
+        {
+         printf("%d\t",a[i][j]);
+         }
+        printf("\n");
+    }
+    
+    for(i=0;i<row1;i++)
+    {
+        for(j=0;j<col1;j++)
+        {
+            if(a[i][j]!=0)
+            {
+                c1++;
+                sparse1[c1][0]=i;
+                sparse1[c1][1]=j;
+                sparse1[c1][2]=a[i][j];
+            }
+        }
+    }
+    sparse1[0][0]=row1;
+    sparse1[0][1]=col1;
+    sparse1[0][2]=c1;
+    printf("triplet format of matrix 1 is:\n");
+    for(i=0;i<c1+1;i++)
+    {
+        for(j=0;j<3;j++)
+        {
+             printf("%d\t",sparse1[i][j]);
+        }
+    printf("\n");
+    }
+    printf("\n Enter the number of rows of matrix 2:\n");
+    scanf("%d",&row2);
+    printf("\n Enter the number of columns of matrix 2:\n");
+    scanf("%d",&col2);
+    printf("Enter the elements:\n");
+    for(i=0;i<row2;i++)
+    {
+        for(j=0;j<col2;j++)
+        {
+            scanf("%d",&b[i][j]);
+            
+        }
+            printf("\n");
+    }
+    
+    printf("Matrix 2 is:\n");
+    for(i=0;i<row2;i++)
+    {
+        for(j=0;j<col2;j++)
+        {
+             printf("%d\t",b[i][j]);
+            
+        }
+        printf("\n");
+    }
+    
+    for(i=0;i<row2;i++)
+    {
+        for(j=0;j<col2;j++)
+        {
+            if(b[i][j]!=0)
+            {
+                c2++;
+                sparse2[c2][0]=i;
+                sparse2[c2][1]=j;
+                sparse2[c2][2]=b[i][j];
+            }
+        }
+    }
+    sparse2[0][0]=row2;
+    sparse2[0][1]=col2;
+    sparse2[0][2]=c2;
+    printf("Triplet format of matrix 2 is:\n");
+    for(i=0;i<c2+1;i++)
+    {
+        for(j=0;j<3;j++)
+        {
+            printf("%d\t",sparse2[i][j]);
+        }
+    printf("\n");
+    }
+    int ch,f;
+    do{
+        printf("1.addition\n2.transpose\n ");
+         printf("enter your choice:\n");
+        scanf("%d",&ch);
+        switch(ch)
+    {
+    case 1:
+    {
+        if(row1==row2 && col1==col2)
+        {
+          i=1,j=1,k=1;
+         if((sparse1[0][0]==sparse2[0][0])&&(sparse1[0][1]==sparse2[0][1]))
+         {
+            while(i<=c1&&j<=c2)
+            {
+                if(sparse1[i][0]<sparse2[j][0])
+                {
+                    result[k][0]=sparse1[i][0];
+                    result[k][1]=sparse1[i][1];
+                    result[k][2]=sparse1[i][2];
+                    i++;
+                    k++;
+                }
+                else if(sparse1[i][0]>sparse2[j][0])
+                {
+                    result[k][0]=sparse2[j][0];
+                    result[k][1]=sparse2[j][1];
+                    result[k][2]=sparse2[j][2];
+                    j++;
+                    k++;
+                 }
+                else{
+                if(sparse1[i][1]<sparse2[j][1])
+                {
+                    result[k][0]=sparse1[i][0];
+                    result[k][1]=sparse1[i][1];
+                    result[k][2]=sparse1[i][2];
+                    i++;
+                    k++;
+                 }
+        else if(sparse1[i][1]>sparse2[j][1])
+        {
+            result[k][0]=sparse2[j][0];
+            result[k][1]=sparse2[j][1];
+            result[k][2]=sparse2[j][2];
+            j++;
+            k++;
+        }
+        else{
+        result[k][0]=sparse2[j][0];
+        result[k][1]=sparse2[j][1];
+        result[k][2]=sparse1[i][2]+sparse2[j][2];
+        i++;
+        j++;
+        k++;
+        }
+                     }
+                
+            }
+             
+         }
+    while(i<=c1)
+    {
+        result[k][0]=sparse1[i][0];
+        result[k][1]=sparse1[i][1];
+        result[k][2]=sparse1[i][2];
+        i++;
+        k++;
+    }
+    while(j<=c2)
+    {
+        result[k][0]=sparse2[j][0];
+        result[k][1]=sparse2[j][1];
+        result[k][2]=sparse2[j][2];
+        j++;
+        k++;
+    }
+    result[0][0]=sparse1[0][0];
+    result[0][1]=sparse1[0][1];
+    result[0][2]=k;
+    printf("\n Resultant matrix is:\n");
+    for(i=0;i<k;i++)
+    {
+        for(j=0;j<3;j++)
+        {
+            printf("%d\t",result[i][j]);
+        }
+        printf("\n");
+    }}
+    else{
+    printf("\n Addition not possible\n");
+    }
+    break;
+    }
+    case 2:
+    {
+        int x,t[50][50];
+        printf("Do you want the transpose of Matrix 1 or Matrix 2?\n ");
+                    scanf("%d", &x);
+                    if (x == 1) {
+                        int k = 1;
+                        for (int i = 0; i < sparse1[0][1]; i++) {
+                            for (int j = 1; j <= sparse1[0][2]; j++) {
+                                if (sparse1[j][1] == i) {
+                                    t[k][0] = sparse1[j][1];
+                                    t[k][1] = sparse1[j][0];
+                                    t[k][2] = sparse1[j][2];
+                                    k++;
+                                }
+                            }
+                        }
+                        t[0][0] = col1;
+                        t[0][1] = row1;
+                        t[0][2] = k - 1;
+                        printf("Transpose of Matrix 1:\n");
+                        for (int i = 0; i < k; i++) {
+                            printf("%d\t%d\t%d\n", t[i][0], t[i][1], t[i][2]);
+                        }
+    }else if (x == 2) {
+                        int k = 1;
+                        for (int i = 0; i < sparse2[0][1]; i++) {
+                            for (int j = 1; j <= sparse2[0][2]; j++) {
+                                if (sparse2[j][1] == i) {
+                                    t[k][0] = sparse2[j][1];
+                                    t[k][1] = sparse2[j][0];
+                                    t[k][2] = sparse2[j][2];
+                                    k++;
+                                }
+                            }
+                        }
+                        t[0][0] = col2;
+                        t[0][1] = row2;
+                        t[0][2] = k - 1;
+                        printf("Transpose of Matrix 2:\n");
+                        for (int i = 0; i < k; i++) {
+                            printf("%d\t%d\t%d\n", t[i][0], t[i][1], t[i][2]);
+                        }
+                    } else {
+                        printf("Invalid entry\n");
+                    }
+                    break;
+                }
+    
+                default:
+                {
+                    printf("Invalid choice. Please try again.\n");
+                }
+            }
+            printf("do you want to continue?");
+            scanf("%d",&f);
+        } while (f==1);
+        
+}

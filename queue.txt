@@ -1,0 +1,81 @@
+queue
+#include<stdio.h>
+void main()
+{
+ int ch,n,front=-1,rear=-1,queue[100],f,item,i;
+ printf("enter size of queue\n");
+ scanf("%d",&n);
+ do
+ {
+  printf("MENU\n");
+  printf("1. Enqueue\n");
+  printf("2. Dequeue\n");
+  printf("3. Display\n");
+  printf("enter choice:\n");
+  scanf("%d",&ch);
+  switch(ch)
+  {
+   case 1:
+   {
+    printf("enter element you want to insert\n");
+     scanf("%d",&item);
+      if(rear==n-1)
+      {
+       printf("overflow!\n");
+      }
+      else if (front==-1 && rear==-1)
+        {
+        front=0;
+        rear=0;
+        queue[rear]=item;
+        }
+      else
+      {
+       rear++;
+       queue[rear]=item;
+      }
+    break;
+   }
+   case 2:
+   {
+        if(front==-1 && rear==-1)
+      {
+       printf("underflow!\n");
+      }
+      else if(front==rear)
+      {
+       front=-1;
+       rear=-1;
+      }
+      else
+      {
+       printf("dequeued element is %d\n",queue[front]);
+       front++;
+      }
+    break;
+   }
+   case 3:
+   {
+        if(front==-1 && rear==-1)
+      {
+       printf("queue is empty\n");
+      }
+      else
+      {
+       for(i=front;i<rear+1;i++)
+       {
+        printf("%d ",queue[i]);
+       }
+       printf("\n");
+     }
+    break;
+   }
+   default:
+   {
+    printf("invalid choice\n");
+   }
+   }
+   printf("do you want to continue?");
+   scanf("%d",&f);
+   }while(f==1);
+ }

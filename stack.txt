@@ -1,0 +1,40 @@
+#include <stdio.h>   
+void push(int a[],int n,int data,int top)
+{
+    if(top==n-1)
+    {
+        printf("stack overflow");
+    }
+    else
+    {
+        top++;
+        a[top]=data;
+    }
+}
+void pop(int a[],int top)
+{
+    if(top==-1)
+    {
+        printf("stack underflow");
+    }
+    else
+    {
+        temp=a[top];
+        top--;
+        printf("deleted element",temp);
+    }
+}
+void display(int a[],top)
+{
+    int i;
+    for(i=0;i<=top;i++)
+    {
+        printf("%d\n",a[i]);
+    }
+}
+void main()
+{
+    int a[100],n,top=-1
+   
+    
+}
